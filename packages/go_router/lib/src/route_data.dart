@@ -73,6 +73,16 @@ abstract class GoRouteData {
   /// Corresponds to [GoRoute.redirect].
   FutureOr<String?> redirect() => null;
 
+  /// An optional redirect function for this route.
+  ///
+  /// Subclasses must override one of [build], [buildPageWithState], or
+  /// [redirect].
+  ///
+  /// Corresponds to [GoRoute.redirect].
+  FutureOr<String?> redirectWithState(
+          BuildContext context, GoRouterState state) =>
+      redirect();
+
   /// A helper function used by generated code.
   ///
   /// Should not be used directly.
@@ -112,7 +122,7 @@ abstract class GoRouteData {
         factoryImpl(state).buildPageWithState(context, state);
 
     FutureOr<String?> redirect(BuildContext context, GoRouterState state) =>
-        factoryImpl(state).redirect();
+        factoryImpl(state).redirectWithState(context, state);
 
     return GoRoute(
       path: path,
